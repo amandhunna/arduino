@@ -1,0 +1,133 @@
+int flag=1;
+char a;
+int s1,s2;
+void setup() {
+Serial.begin(9600);
+pinMode(A5,INPUT);
+pinMode(A4,INPUT);
+pinMode(10,OUTPUT);
+pinMode(9,OUTPUT);
+pinMode(8,OUTPUT);
+pinMode(7,OUTPUT);
+pinMode(6,OUTPUT);
+}
+
+void loop() {
+// Serial.println("Enter your choice \n M. Manual Control FLAG=1 \n 0. Automatic (Line Follower) FLAG=0");
+  a=Serial.read();//1 or 2
+ 
+  s1=digitalRead(A4);// value from senser
+  s2=digitalRead(A5);// value from senser
+//****************************KEY CONTROL*******************
+if((a=='m')||(a=='m'))
+  { flag=1;
+  }
+ if((a=='O')||(a=='o'))
+  { flag=0;
+  }
+  
+if((a=='H')||(a=='h'))
+{
+                     digitalWrite(10,LOW);
+                     digitalWrite(9,LOW);
+                     digitalWrite(8,LOW);
+                     digitalWrite(7,LOW);
+                     digitalWrite(6,LOW);
+                     Serial.println("HALT");
+}
+
+if(((a=='W')||(a=='w'))&&(flag==1))
+{
+                     digitalWrite(10,HIGH);
+                     digitalWrite(9,LOW);
+                     digitalWrite(8,HIGH);
+                     digitalWrite(7,LOW);  
+                     digitalWrite(6,LOW);
+                     Serial.println("W..FRONT");
+}
+
+if(((a=='Z')||(a=='z'))&&(flag==1))
+{
+                     digitalWrite(10,LOW);
+                     digitalWrite(9,HIGH);
+                     digitalWrite(8,LOW);
+                     digitalWrite(7,HIGH);
+                     digitalWrite(6,LOW);
+                     Serial.println("Z..BACK");
+}
+
+if(((a=='B')||(a=='b'))&&(flag==1))
+{
+                      digitalWrite(10,HIGH);
+                      digitalWrite(9,LOW);
+                      digitalWrite(8,HIGH);
+                      digitalWrite(7,LOW);
+                      digitalWrite(6,HIGH);
+                      Serial.println("B... BURNOUT");
+}
+if(((a=='a')||(a=='A'))&&(flag==1))
+{
+                      digitalWrite(10,LOW);
+                      digitalWrite(9,HIGH);
+                      digitalWrite(8,HIGH);
+                      digitalWrite(7,LOW);
+                      digitalWrite(6,LOW);
+                      Serial.println("A..LEFT");
+}
+
+
+if(((a=='S')||(a=='s'))&&(flag==1))
+{
+                      digitalWrite(10,HIGH);
+                      digitalWrite(9,LOW);
+                      digitalWrite(8,LOW);
+                      digitalWrite(7,HIGH);
+                      digitalWrite(6,LOW);
+                      Serial.println("S..RIGHT");
+      
+      
+}
+//****************************OBSTACLE AVOIDER*******************
+if(((s1==LOW)&&(s2==LOW))&&(flag==0))
+{                  
+                     digitalWrite(10,HIGH);
+                     digitalWrite(9,LOW);
+                     digitalWrite(8,HIGH);
+                     digitalWrite(7,LOW);  
+                     digitalWrite(6,LOW);
+                     Serial.println("FRONT");
+}
+
+if(((s1==HIGH)&&(s2==HIGH))&&(flag==0))
+{   
+                     digitalWrite(10,LOW);
+                     digitalWrite(9,HIGH);
+                     digitalWrite(8,LOW);
+                     digitalWrite(7,HIGH);
+                     digitalWrite(6,LOW);
+                     Serial.println("BACK");
+
+}
+if(((s1==HIGH)&&(s2==LOW))&&(flag==0))
+{
+                      digitalWrite(10,LOW);
+                      digitalWrite(9,HIGH);
+                      digitalWrite(8,HIGH);
+                      digitalWrite(7,LOW);
+                      digitalWrite(6,LOW);
+                      Serial.println("LEFT");
+  
+}
+if(((s1==LOW)&&(s2==HIGH))&&(flag==0))
+
+{
+                      digitalWrite(10,HIGH);
+                      digitalWrite(9,LOW);
+                      digitalWrite(8,LOW);
+                      digitalWrite(7,HIGH);
+                      digitalWrite(6,LOW);
+                      Serial.println("RIGHT");                                                          
+}
+
+}
+
